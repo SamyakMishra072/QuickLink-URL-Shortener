@@ -56,7 +56,7 @@ function App() {
 
     setIsLoading(true);
     try {
-      const response = await fetch('/api/shorten', {
+      const response = await fetch('https://quicklink-url-shortener.onrender.com/api/shorten', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
