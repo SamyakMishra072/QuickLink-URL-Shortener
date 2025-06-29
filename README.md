@@ -28,14 +28,6 @@ QuickLink is a simple yet beautiful full-stack URL shortener web app. Paste a lo
 - SQLite (lightweight database)
 - TypeScript
 
----
-
-## 🧪 Live Demo
-
-Frontend: [https://quicklink.vercel.app](https://quicklink.vercel.app)  
-Backend API: [https://quicklink-url-shortener.onrender.com](https://quicklink-url-shortener.onrender.com)
-
----
 ## 🙌 Acknowledgements
 
 Made with ❤️ by [Samyak Mishra](https://github.com/SamyakMishra072)  
