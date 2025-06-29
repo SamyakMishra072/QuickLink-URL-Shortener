@@ -38,7 +38,7 @@ app.post('/api/shorten', async (req, res) => {
     if (existing) {
       return res.json({
         shortUrl: `${BASE_URL}/${existing.shortCode}`,
-        originalUrl: url
+        originalUrl: url,
       });
     }
 
@@ -61,7 +61,7 @@ app.post('/api/shorten', async (req, res) => {
 
     res.json({
       shortUrl: `${BASE_URL}/${shortCode}`,
-      originalUrl: url
+      originalUrl: url,
     });
   } catch (error) {
     console.error('Error shortening URL:', error);
@@ -73,13 +73,13 @@ app.post('/api/shorten', async (req, res) => {
 app.get('/:code', async (req, res) => {
   try {
     const { code } = req.params;
-    
+
     if (!code || code.length !== 6) {
       return res.status(404).json({ error: 'Short code not found' });
     }
 
     const urlData = await db.getByShortCode(code);
-    
+
     if (!urlData) {
       return res.status(404).json({ error: 'URL not found' });
     }
@@ -96,7 +96,7 @@ app.get('/:code', async (req, res) => {
 });
 
 // Health check
-app.get('/api/health', (req, res) => {
+app.get('/api/health', (_req, res) => {
   res.json({ status: 'OK', timestamp: new Date().toISOString() });
 });
 
@@ -106,17 +106,17 @@ app.get('*', (req, res) => {
   if (req.path.startsWith('/api/')) {
     return res.status(404).json({ error: 'API endpoint not found' });
   }
-  
+
   // Skip short code routes (they should be handled above)
   if (req.path.length === 7 && req.path.startsWith('/')) {
     return res.status(404).json({ error: 'Short code not found' });
   }
-  
+
   res.sendFile(path.join(__dirname, '../../client/dist/index.html'));
 });
 
 // Error handling middleware
-app.use((err: Error, req: express.Request, res: express.Response, next: express.NextFunction) => {
+app.use((err: Error, _req: express.Request, res: express.Response, _next: express.NextFunction) => {
   console.error('Unhandled error:', err);
   res.status(500).json({ error: 'Internal server error' });
 });
