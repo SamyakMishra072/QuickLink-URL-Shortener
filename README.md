@@ -3,7 +3,7 @@
 
 QuickLink is a simple yet beautiful full-stack URL shortener web app. Paste a long URL, click submit, and get a clean, short link instantly — no sign-up required.
 
-![QuickLink Screenshot](https://raw.githubusercontent.com/SamyakMishra072/QuickLink-URL-Shortener/main/78.png)
+![QuickLink Screenshot](https://github.com/SamyakMishra072/QuickLink-URL-Shortener/blob/main/78.png)
 
 ---
 
