@@ -47,36 +47,40 @@ function App() {
     }
   };
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!isValidUrl(url)) {
-      showToast('Please enter a valid URL', 'error');
-      return;
+const handleSubmit = async (e: React.FormEvent) => {
+  e.preventDefault();
+  if (!isValidUrl(url)) {
+    showToast('Please enter a valid URL', 'error');
+    return;
+  }
+
+  setIsLoading(true);
+  try {
+    const response = await fetch('https://quicklink-url-shortener.onrender.com/api/shorten', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ url }),
+    });
+
+    if (!response.ok) {
+      throw new Error('Failed to shorten URL');
     }
 
-    setIsLoading(true);
-    try {
-      const response = await fetch('https://quicklink-url-shortener.onrender.com/api/shorten', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ url }),
-      });
+    const data: ShortenResponse = await response.json();
+    
+    // ✅ Use the full short URL from the backend
+    setShortUrl(data.shortUrl);
 
-      if (!response.ok) {
-        throw new Error('Failed to shorten URL');
-      }
+    showToast('URL shortened successfully!', 'success');
+  } catch (error) {
+    showToast('Failed to shorten URL. Please try again.', 'error');
+  } finally {
+    setIsLoading(false);
+  }
+};
 
-      const data: ShortenResponse = await response.json();
-      setShortUrl(`${window.location.origin}/${data.shortUrl.split('/').pop()}`);
-      showToast('URL shortened successfully!', 'success');
-    } catch (error) {
-      showToast('Failed to shorten URL. Please try again.', 'error');
-    } finally {
-      setIsLoading(false);
-    }
-  };
 
   const copyToClipboard = async () => {
     try {
